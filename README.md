@@ -1,5 +1,7 @@
 # RaspberryPi weather station
 
+![The finished product, showing weather information on an e-ink screen](photos/IMG_9276.jpeg)
+
 This was a little project putting together a weathers station using some off-the-shelf hardware, a little R and Python. I've written-up some details here in case they are of use to anyone else.
 
 I wanted to have a wee screen with weather, tides, moon phase, date and sunrise/sunset times on it. Having a 1.4GHz 64-bit quad-core processor is very much overkill for this task!
