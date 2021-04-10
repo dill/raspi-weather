@@ -19,7 +19,10 @@ weather_dat <- weather_dat[order(weather_dat$DateTime), ]
 # get just the columns we want
 weather_dat <- weather_dat[, c("temperature", "windgustspeed", "windletter",
                                "iconName", "weekday", "sunrise", "sunset",
-                               "DateTime")]
+                               "DateTime", "windspeed", "windletter",
+                               "windgustspeed")]
 
 weather_dat$temperature <- as.numeric(weather_dat$temperature)
+weather_dat$windspeed <- as.numeric(weather_dat$windspeed)
+weather_dat$windgustspeed <- as.numeric(weather_dat$windgustspeed)
 
