@@ -21,6 +21,10 @@ Some additional information on the display, from the manufacturer:
 - [WaveShare example code](https://github.com/waveshare/e-Paper/blob/master/RaspberryPi%26JetsonNano/python/examples/epd_2in7_test.py)
 - [More WaveShare example code](https://github.com/soonuse/epd-library-python/blob/master/2.7inch_e-paper/raspberrypi/python/main.py0)
 
+## Software
+
+R, Python, the [Lato font family](https://fonts.google.com/specimen/Lato).
+
 ## Data
 
 Some data needs to come from external sources, so this required a bit of faff...
@@ -47,7 +51,7 @@ The R package [`lunar`](https://CRAN.R-project.org/package=lunar) provides moon 
 
 `reticulate` made this all really easy, as you can just source Python files and run the functions as if they were R functions.
 
-What was fiddly was updating the screen, moving things around and using the Python Image Library to convert images to be greyscale to show-up on the screen.
+What was fiddly was updating the screen, moving things around and using the Python Image Library to convert images to be greyscale to show-up on the screen. `update_img.py` is provided as a drop-in to test things out without having to use the screen update (it writes to a local file).
 
 
 # Resources
