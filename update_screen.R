@@ -4,11 +4,21 @@
 library(reticulate)
 library(lubridate)
 library(lunar)
+library(httr)
+library(lubridate)
+library(rvest)
+library(magrittr)
+library(stringr)
+
+
 
 options(stringsAsFactors=FALSE)
+
+# source functions to get weather and tide data
 source("metcheck.R")
 source("tides.R")
 
+weather_dat <- metcheck(lat=56.4, lon=-2.9)
 weather_dat <- weather_dat[weather_dat$DateTime < (now()+hours(24)), ]
 
 sunrise <- weather_dat$sunrise[1]
@@ -23,6 +33,10 @@ wind <- paste0(round(1.60934 * max(weather_dat$windspeed), 0), " ",
                weather_dat$windletter[which.max(weather_dat$windspeed)])
 gust <- paste0(round(1.60934 * max(weather_dat$windgustspeed), 0))
 
+
+
+# tides
+tide_dat <- tides("gfn0b1fpm")
 # we have up arrows, for low tide rotate them
 tide_status <- rep(0, nrow(tide_dat))
 tide_status[tide_dat$Tide=="Low"] <- 180
@@ -41,11 +55,16 @@ moon_icon_ind <- which(as.character(lunar.phase(Sys.Date(), name=8)) ==
 moon_ico_path <- sub(" ", "icons/moon_phases/", moon_csv[moon_icon_ind, 2])
 
 
-
+# get the date to show
 today_date <- format(Sys.Date(), "%A %d %B")
 
+# update the device
 source_python("update_rot.py")
+# debug mode
+# comment above and uncomment below
+#source_python("update_img.py")
 
+# run the reticulated code
 display_weather(today_date, sunrise, sunset, hightemp, lowtemp, ico_path,
                 tide_status, tide_height, tide_dat$Time, moon_ico_path,
                 wind, gust)
