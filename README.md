@@ -31,7 +31,7 @@ Some data needs to come from external sources, so this required a bit of faff...
 
 ### Tides
 
-Data is available [from UK Hydrographic Office](https://www.admiralty.co.uk/digital-services/data-solutions/uk-tidal-api) but (1) it's only for a point fairly far from where I care about and (2) you can only use their API for free for one year. So instead I scraped the [Met Office](https://www.metoffice.gov.uk/) beach forecast page.
+I scraped the [BBC Tide Tables](https://www.bbc.co.uk/weather/coast-and-sea/tide-tables/). Presumably this will all break if the site layout changes.
 
 ### Weather and temperature
 

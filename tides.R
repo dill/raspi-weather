@@ -1,31 +1,24 @@
 # get tides
-tides <- function(met_code){
+tides <- function(code){
 
   # get the page for our beach
-  # this is dependent on the metoffice not messing around with 
-  pp <- read_html(paste0("https://www.metoffice.gov.uk/weather/specialist-forecasts/coast-and-sea/beach-forecast-and-tide-times/", met_code))
+  # this is dependent on the BBC not messing around with the page format
+  pp <- read_html(paste0("https://www.bbc.co.uk/weather/coast-and-sea/tide-tables/", code))
 
   # select today ("day-0")
-  tide_dat <- html_nodes(pp, "#tide-day-0") %>%
+  high_tide <- pp %>%
     # extract data from in the SVG
-    html_nodes("svg") %>%
-    html_attr("aria-label")
+    html_element(css=".wr-c-tides-today__next__time--high > span:nth-child(1)") %>%
+    html_text2() %>%
+    str_extract("\\d{2}:\\d{2}")
+  low_tide <- pp %>%
+    # extract data from in the SVG
+    html_element(css=".wr-c-tides-today__next__time--low > span:nth-child(1)") %>%
+    html_text2() %>%
+    str_extract("\\d{2}:\\d{2}")
   # get just the unique entries
-  tide_dat <- unique(tide_dat)
-
-  # remvoe "Tide height" and "Tide time"
-  tide_dat <- tide_dat[!tide_dat %in% c("Tide height", "Tide time")]
-  # now just process the remaining bits
-  tide_dat <- str_split(tide_dat, " tide of ")
-  tide_dat <- unlist(str_split(unlist(tide_dat), " metres at "))
-
-  tide_dat <- matrix(tide_dat, ncol=3, byrow=TRUE)
-  # remove trailing period
-  tide_dat[,3] <- str_replace(tide_dat[,3], "\\.", "")
-
-  # data.frame-ify
-  tide_dat <- as.data.frame(tide_dat)
-  colnames(tide_dat) <- c("Tide", "Height", "Time")
+  tide_dat <- data.frame(Tide = c("High", "Low"),
+                         Time = c(high_tide, low_tide))
 
   return(tide_dat)
 }
